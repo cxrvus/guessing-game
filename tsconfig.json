@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+    "moduleResolution": "node",
+		"target": "ES2021",
+		"lib": ["ES2021"],
+		"watch": true,
+		"types": ["node"],
+    "jsx": "react",
+	},
+}
