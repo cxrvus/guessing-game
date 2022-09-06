@@ -1,10 +1,41 @@
 import React from 'react';
+import './game.css';
 import './App.css';
+
+const CONFIRM = '$'
+const CANCEL = 'x'
 
 function App() {
 	return (
-		<NumberPad value='0'/>
+		<CoreContainer/>
 	)
+}
+
+function CoreContainer(){
+	return (
+		<div className='center'>
+			<NumberDisplay/>
+			<NumberPad/>
+		</div>
+	)
+}
+
+class NumberDisplay extends React.Component {
+	constructor(props){
+		super(props)
+		this.state = {
+			value: ''
+		}
+	}
+
+	render() {
+		return (
+			<textarea
+				value = {this.state.value}
+				className = 'number-display'
+			/>
+		)
+	}
 }
 
 class NumberPad extends React.Component {
@@ -14,10 +45,10 @@ class NumberPad extends React.Component {
 
 	renderNumberKey(i) {
 		return (
-			<NumberKey>
+			<NumberKey
 				value = {i}
 				onClick = {() => this.handleClick(i)}
-			</NumberKey>
+			/>
 		)
 	} 
 
@@ -25,19 +56,24 @@ class NumberPad extends React.Component {
     return (
       <div>
         <div className="number-pad-row">
-          {this.renderNumberKey(0)}
-          {this.renderNumberKey(1)}
-          {this.renderNumberKey(2)}
-        </div>
-        <div className="number-pad-row">
-          {this.renderNumberKey(3)}
-          {this.renderNumberKey(4)}
-          {this.renderNumberKey(5)}
-        </div>
-        <div className="number-pad-row">
-          {this.renderNumberKey(6)}
           {this.renderNumberKey(7)}
           {this.renderNumberKey(8)}
+          {this.renderNumberKey(9)}
+        </div>
+        <div className="number-pad-row">
+          {this.renderNumberKey(4)}
+          {this.renderNumberKey(5)}
+          {this.renderNumberKey(6)}
+        </div>
+        <div className="number-pad-row">
+          {this.renderNumberKey(1)}
+          {this.renderNumberKey(2)}
+          {this.renderNumberKey(3)}
+        </div>
+        <div className="number-pad-row">
+          {this.renderNumberKey(CANCEL)}
+          {this.renderNumberKey(0)}
+          {this.renderNumberKey('$')}
         </div>
       </div>
     );

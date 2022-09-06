@@ -13,12 +13,17 @@ ol, ul {
   display: table;
 }
 
-.status {
-  margin-bottom: 10px;
+.center{
+	text-align: center;
+	margin: auto;
 }
 
+.number-display{
+}
+
+
 number-key {
-  background: #fff;
+  background: #880;
   border: 1px solid #999;
   float: left;
   font-size: 24px;
