@@ -25,27 +25,38 @@ class CoreContainer extends Component{
 	}
 
 	handleGuessInput = (evt) => {
-		const value = evt.target.value
 		const isFromKey = evt.target.nodeName === 'BUTTON'
+		const value = evt.target.value
 		const char = isFromKey ? value : value.substring(value.length - 1)
 
-		if (char.match(/^\d$/)){
+		if (!isFromKey && value.length < this.state.guess.length){
 			this.setState((state) => ({
-				guess: state.guess += char
+				guess: state.guess.substring(0, state.guess.length-1)
 			}))
 		}
 		else if(char === '\n' || (isFromKey && char === SUBMIT))
 			this.submitGuess()
 		else if (isFromKey && char === CLEAR)
 			this.setState({ guess: '' })
+		else if(this.state.guess.length > Core.config.maxChar - 1)
+			this.setState((state) => ({
+				guess: state.guess
+			}))
+		else if (char.match(/^\d$/)){
+			this.setState((state) => ({
+				guess: state.guess += char
+			}))
+		}
+
 	}
 
 	submitGuess = () => {
+		Core.validateGuessString(this.state.guess)
 		this.setState((state) => ({
 			guess: '',
 			history: state.history.concat(state.guess),
 			gameState: Core.evaluateGuess(
-				state.guess,
+				parseInt(state.guess),
 				state.correct,
 				state.history
 			)
@@ -55,6 +66,7 @@ class CoreContainer extends Component{
 	render = () => {
 		return (
 		<div className='center'>
+			<p>{`correct: ${this.state.correct} | tries: ${this.state.history.length}`}</p>
 			<DialogueDisplay text = {this.state.gameState.text}/>
 			<NumberDisplay value = {this.state.guess} onChange = {this.handleGuessInput}/>
 			<NumberPad keyPressHandler = {this.handleGuessInput}/>
